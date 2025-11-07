@@ -683,7 +683,13 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
 
   /// Disposes the resources created by [YoutubePlayerController].
   Future<void> close() async {
-    await stopVideo();
+    final result = await webViewController.runJavaScriptReturningResult(
+        "typeof player !== 'undefined' && typeof player.stopVideo === 'function'");
+    // The result may come back as a JavaScript boolean or string depending on platform
+    final canStopVideo = result.toString() == 'true';
+    if (canStopVideo) {
+      await stopVideo();
+    }
     await webViewController.removeJavaScriptChannel('youtube-$hashCode');
     await _eventHandler.videoStateController.close();
     await _valueController.close();
