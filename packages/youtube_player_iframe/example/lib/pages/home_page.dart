@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
         return Scaffold(
           appBar: AppBar(
             title: const Text('Youtube Player IFrame Demo'),
-            actions: const [VideoPlaylistIconButton()],
+            actions: const [VideoPlaylistIconButton(), SingleVideoIconButton()],
           ),
           body: LayoutBuilder(
             builder: (context, constraints) {
@@ -152,6 +152,25 @@ class Controls extends StatelessWidget {
   }
 
   Widget get _space => const SizedBox(height: 10);
+}
+
+///
+class SingleVideoIconButton extends StatelessWidget {
+  ///
+  const SingleVideoIconButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = context.ytController;
+
+    return IconButton(
+      onPressed: () async {
+        controller.pauseVideo();
+        router.go('/single-video');
+      },
+      icon: const Icon(Icons.play_arrow),
+    );
+  }
 }
 
 ///
