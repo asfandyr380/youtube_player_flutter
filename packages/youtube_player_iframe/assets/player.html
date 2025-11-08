@@ -55,7 +55,6 @@
           playerVars: <<playerVars>>,
           events: {
             onReady: function (event) {
-              handleFullScreenForMobilePlatform();
               sendMessage('Ready', event);
             },
             onStateChange: function (event) {
@@ -115,6 +114,12 @@
         player.setSize(window.innerWidth, window.innerHeight);
       };
 
+      if(platform != 'web') {
+        window.addEventListener("fullscreenchange", () => {
+          sendMessage('FullscreenButtonPressed', '');
+        });
+      }
+
       function sendPlatformMessage(message) {
         switch(platform) {
            case 'android':
@@ -155,21 +160,7 @@
 
         return JSON.stringify(data);
       }
-
-      function handleFullScreenForMobilePlatform() {
-        if(platform != 'web') {
-          var ytFrame = document.getElementsByTagName('iframe')[0].contentWindow.document;
-          var fsButton = ytFrame.getElementsByClassName('ytp-fullscreen-button ytp-button')[0];
-
-          if(fsButton != null) {
-            var fsButtonCopy = fsButton.cloneNode(true);
-            fsButton.replaceWith(fsButtonCopy);
-            fsButtonCopy.onclick = function() {
-              sendMessage('FullscreenButtonPressed', '');
-            };
-          }
-        }
-      }
+      
     </script>
   </body>
 </html>
