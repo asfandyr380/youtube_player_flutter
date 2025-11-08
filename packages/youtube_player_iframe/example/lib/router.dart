@@ -4,6 +4,7 @@
 
 import 'package:go_router/go_router.dart';
 import 'package:youtube_player_iframe_example/pages/home_page.dart';
+import 'package:youtube_player_iframe_example/pages/single_video_page.dart';
 import 'package:youtube_player_iframe_example/pages/video_list_page.dart';
 
 final router = GoRouter(
@@ -23,6 +24,12 @@ final router = GoRouter(
             return NoTransitionPage(
               child: HomePage(videoId: state.uri.queryParameters['v']),
             );
+          },
+        ),
+        GoRoute(
+          path: 'single-video',
+          pageBuilder: (_, GoRouterState state) {
+            return const NoTransitionPage(child: SingleVideoPage());
           },
         ),
       ],
