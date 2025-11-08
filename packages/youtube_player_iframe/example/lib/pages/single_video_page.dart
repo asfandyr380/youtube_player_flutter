@@ -13,7 +13,6 @@ class _SingleVideoPageState extends State<SingleVideoPage> {
   late YoutubePlayerController _youtubeController;
 
   final List<String> _videoIds = [
-    'j4lDDQTKN8s',
     'bmgia-h1qNg',
     'Cohbiz2lOQI',
     'CoNgsfBbxJk',
@@ -25,7 +24,7 @@ class _SingleVideoPageState extends State<SingleVideoPage> {
   @override
   void initState() {
     super.initState();
-    const String origin = "https://www.youtube-no-cookie.com";
+    const String origin = "https://www.youtube-nocookie.com";
     _youtubeController = YoutubePlayerController.fromVideoId(
       videoId: _videoIds[1],
       autoPlay: true,
