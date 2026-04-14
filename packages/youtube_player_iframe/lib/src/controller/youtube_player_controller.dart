@@ -27,6 +27,7 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
     this.params = const YoutubePlayerParams(),
     ValueChanged<YoutubeWebResourceError>? onWebResourceError,
     this.key,
+    this.allowOpenVideoExternally = true,
   }) {
     _eventHandler = YoutubePlayerEventHandler(this);
 
@@ -101,6 +102,9 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
 
   /// Defines player parameters for the youtube player.
   final YoutubePlayerParams params;
+
+  /// allow video to be opened in the external browser or the youtube app
+  final bool allowOpenVideoExternally;
 
   /// The [WebViewController] that drives the player
   @internal
@@ -659,13 +663,13 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
         if (videoId != null) loadVideoById(videoId: videoId);
         break;
       case 'emb_info':
-        if (this.params.allowOpenVideoExternally) uri_launcher.launchUrl(uri);
+        if (allowOpenVideoExternally) uri_launcher.launchUrl(uri);
         break;
       case 'emb_title':
       case 'emb_logo':
       case 'social':
       case 'wl_button':
-        if (this.params.allowOpenVideoExternally) uri_launcher.launchUrl(uri);
+        if (allowOpenVideoExternally) uri_launcher.launchUrl(uri);
         break;
     }
 
