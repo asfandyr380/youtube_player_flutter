@@ -48,7 +48,6 @@
       var host = "<<host>>";
       var player;
       var timerId;
-      var allowLinkCopy = "<<allowLinkCopy>>";
 
       function onYouTubeIframeAPIReady() {
         player = new YT.Player("<<playerId>>", {
@@ -121,16 +120,6 @@
         });
       }
 
-      if(allowLinkCopy === "0") {
-        window.addEventListener("copy", function(e){
-          e.preventDefault();
-          e.stopPropagation();
-        });
-        window.addEventListener("cut", function(e){
-          e.preventDefault();
-          e.stopPropagation();
-        });
-      }
 
       function sendPlatformMessage(message) {
         switch(platform) {

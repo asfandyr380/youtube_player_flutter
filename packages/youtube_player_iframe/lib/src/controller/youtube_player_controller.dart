@@ -28,7 +28,6 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
     ValueChanged<YoutubeWebResourceError>? onWebResourceError,
     this.key,
     this.allowOpenVideoExternally = true,
-    this.allowCopyLink = '1',
   }) {
     _eventHandler = YoutubePlayerEventHandler(this);
 
@@ -79,13 +78,11 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
     double? startSeconds,
     double? endSeconds,
     bool allowOpenVideoExternally = true,
-    String allowCopyLink = '1',
   }) {
     final controller = YoutubePlayerController(
       params: params,
       key: videoId,
       allowOpenVideoExternally: allowOpenVideoExternally,
-      allowCopyLink: allowCopyLink,
     );
 
     if (autoPlay) {
@@ -113,9 +110,6 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
 
   /// allow video to be opened in the external browser or the youtube app
   final bool allowOpenVideoExternally;
-
-  /// allow video link to be copied
-  final String allowCopyLink;
 
   /// The [WebViewController] that drives the player
   @internal
@@ -286,7 +280,6 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
       'playerVars': params.toJson(),
       'platform': platform,
       'host': params.origin ?? 'https://www.youtube.com',
-      'allowLinkCopy': allowCopyLink,
     };
 
     await webViewController.loadHtmlString(
@@ -654,6 +647,16 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
     final params = uri.queryParameters;
     final host = uri.host;
     final path = uri.path;
+
+    // Block YouTube channel navigation
+    if (host.contains('youtube.com')) {
+      if (path.startsWith('/channel/') ||
+          path.startsWith('/@') ||
+          path.startsWith('/c/') ||
+          path.startsWith('/user/')) {
+        return NavigationDecision.prevent;
+      }
+    }
 
     String? featureName;
     if (host.contains('facebook') ||
