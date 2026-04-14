@@ -28,7 +28,7 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
     ValueChanged<YoutubeWebResourceError>? onWebResourceError,
     this.key,
     this.allowOpenVideoExternally = true,
-    this.allowCopyLink = true,
+    this.allowCopyLink = '1',
   }) {
     _eventHandler = YoutubePlayerEventHandler(this);
 
@@ -79,7 +79,7 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
     double? startSeconds,
     double? endSeconds,
     bool allowOpenVideoExternally = true,
-    bool allowCopyLink = true,
+    String allowCopyLink = '1',
   }) {
     final controller = YoutubePlayerController(
       params: params,
@@ -115,7 +115,7 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
   final bool allowOpenVideoExternally;
 
   /// allow video link to be copied
-  final bool allowCopyLink;
+  final String allowCopyLink;
 
   /// The [WebViewController] that drives the player
   @internal
@@ -286,7 +286,7 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
       'playerVars': params.toJson(),
       'platform': platform,
       'host': params.origin ?? 'https://www.youtube.com',
-      'allowLinkCopy': allowCopyLink.toString(),
+      'allowLinkCopy': allowCopyLink,
     };
 
     await webViewController.loadHtmlString(
