@@ -77,8 +77,13 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
     bool autoPlay = false,
     double? startSeconds,
     double? endSeconds,
+    bool allowOpenVideoExternally = true,
   }) {
-    final controller = YoutubePlayerController(params: params, key: videoId);
+    final controller = YoutubePlayerController(
+      params: params,
+      key: videoId,
+      allowOpenVideoExternally: allowOpenVideoExternally,
+    );
 
     if (autoPlay) {
       controller.loadVideoById(
