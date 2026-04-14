@@ -638,7 +638,7 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
     final params = uri.queryParameters;
     final host = uri.host;
     final path = uri.path;
-    
+
     String? featureName;
     if (host.contains('facebook') ||
         host.contains('twitter') ||
@@ -659,13 +659,13 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
         if (videoId != null) loadVideoById(videoId: videoId);
         break;
       case 'emb_info':
-        uri_launcher.launchUrl(uri);
+        if (this.params.allowOpenVideoExternally) uri_launcher.launchUrl(uri);
         break;
       case 'emb_title':
       case 'emb_logo':
       case 'social':
       case 'wl_button':
-        uri_launcher.launchUrl(uri);
+        if (this.params.allowOpenVideoExternally) uri_launcher.launchUrl(uri);
         break;
     }
 

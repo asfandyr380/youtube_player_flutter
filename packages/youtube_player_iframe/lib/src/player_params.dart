@@ -110,6 +110,9 @@ class YoutubePlayerParams {
   /// The user agent for the player.
   final String? userAgent;
 
+  /// allow video to be opened in the external browser or the youtube app
+  final bool allowOpenVideoExternally;
+
   /// Defines player parameters for the youtube player.
   const YoutubePlayerParams({
     this.mute = false,
@@ -128,6 +131,7 @@ class YoutubePlayerParams {
     this.playsInline = true,
     this.strictRelatedVideos = false,
     this.userAgent,
+    this.allowOpenVideoExternally = true,
   });
 
   /// Creates [Map] representation of [YoutubePlayerParams].
